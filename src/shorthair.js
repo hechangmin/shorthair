@@ -1,6 +1,52 @@
+/**
+ *
+ * css3-selector
+ *
+ * 参考：http://www.w3.org/TR/css3-selectors/#w3cselgrammar
+ * 参考：http://www.w3.org/TR/css3-selectors/
+ *
+ */
 var shorthair = (function(){
 
     var jcon = require('jcon');
+
+
+    //css3-selector基本正则定义
+    var ident = jcon.regex(/[-]?/).seq(nmstart,nmchar.many());
+    var name = nmchar.least(1);
+    var nmstart = jcon.regex(/[_a-z]/).or(nonascii, escape);
+    var nonascii = jcon.regex(/[^\0-\177]/);
+    var unicode = jcon.regex(/\\[0-9a-f]{1,6}(\r\n|[ \n\r\t\f])?/);
+    var escape = unicode.or(jcon.regex(/\\[^\n\r\f0-9a-f]/));
+    var nmchar = jcon.regex(/[_a-z0-9-]/).or(nonascii, escape);
+    var num = jcon.regex(/[0-9]+|[0-9]*\.[0-9]+/);
+    var string = string1.or(string2);
+    var nl = jcon.regex(/\n|\r\n|\r|\f/);
+    var string1 = jcon.string('"').seq(jcon.regex(/[^\n\r\f\\"]/).or(nl, nonascii, escape).many(), jcon.string('"'));
+    var string2 = jcon.string("'").seq(jcon.regex(/[^\n\r\f\\']/).or(nl, nonascii, escape).many(), jcon.string('"'));
+
+
+    //css3-selector词法单元定义
+    var INCLUDES = jcon.string('~=');
+    var DASHMATCH = jcon.string('|=');
+    var PREFIXMATCH = jcon.string('^=');
+    var SUFFIXMATCH = jcon.string('$=');
+    var SUBSTRINGMATCH = jcon.string('*=');
+    var IDENT = ident;
+    var STRING = string;
+    var FUNCTION = ident.seq(jcon.string('('));
+    var NUMBER = num;
+    var HASH = jcon.string('#').seq(name);
+    var PLUS = w.seq(jcon.string('+'));
+    var GREATER = w.seq(jcon.string('>'));
+    var COMMA = w.seq(jcon.string(','));
+    var TILDE = w.seq(jcon.string('~'));
+    var NOT = jcon.string(':').seq(n, o, t, jcon.string('('));
+    var ATKEYWORD = jcon.string('@').seq(ident);
+
+
+
+
 
     var parser = jcon.string('hello');
 
