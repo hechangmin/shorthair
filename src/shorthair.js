@@ -24,6 +24,13 @@ var shorthair = (function(){
     var nl = jcon.regex(/\n|\r\n|\r|\f/);
     var string1 = jcon.string('"').seq(jcon.regex(/[^\n\r\f\\"]/).or(nl, nonascii, escape).many(), jcon.string('"'));
     var string2 = jcon.string("'").seq(jcon.regex(/[^\n\r\f\\']/).or(nl, nonascii, escape).many(), jcon.string('"'));
+    var invalid1 = jcon.string('"').seq(jcon.regex(/[^\n\r\f\\"]/).or(nl, nonascii, escape).many());
+    var invalid2 = jcon.string("'").seq(jcon.regex(/[^\n\r\f\\']/).or(nl, nonascii, escape).many());
+    var w = jcon.regex(/[ \t\r\n\f]*/);
+
+    //var D = d.or(jcon.regex(/\\0{0,4}(44|64)(\r\n|[ \t\r\n\f])?/));
+    var O = jcon.string('o').or(jcon.regex(/\\0{0,4}(4f|6f)(\r\n|[ \t\r\n\f])?/)).or(jcon.string('\\o'));
+    var T = jcon.string('t').or(jcon.regex(/\\0{0,4}(54|74)(\r\n|[ \t\r\n\f])?/)).or(jcon.string('\\t'));
 
 
     //css3-selector词法单元定义
@@ -43,6 +50,13 @@ var shorthair = (function(){
     var TILDE = w.seq(jcon.string('~'));
     var NOT = jcon.string(':').seq(n, o, t, jcon.string('('));
     var ATKEYWORD = jcon.string('@').seq(ident);
+    var INVALID = invalid;
+    var PERCENTAGE = num.seq(jcon.string('%'));
+    var DIMENSION = num.seq(ident);
+    var CDO = jcon.string('<!--');
+    var CDC = jcon.string('-->');
+
+    var IGNORE = jcon.regex(/\/\*[^*]*\*+([^/*][^*]*\*+)*\//);
 
 
 
