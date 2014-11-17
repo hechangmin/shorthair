@@ -10,7 +10,8 @@ module.exports = (function(){
 
     return {
         tag: function(test){
-            test.equal(shorthair.parse('hello').value, 'hello', 'tag ok!');
+            console.log(JSON.stringify(shorthair.parse('hello.a.b>a.b b').value));
+            //test.equal(shorthair.parse('hello').value, 'hello', 'tag ok!');
             test.done();
         }
     };
