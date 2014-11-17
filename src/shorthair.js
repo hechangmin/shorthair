@@ -35,6 +35,7 @@ var shorthair = (function(){
 
 
     //css3-selector词法单元定义
+    var S = jcon.regex(/[ \t\r\n\f]+/);
     var INCLUDES = jcon.string('~=');
     var DASHMATCH = jcon.string('|=');
     var PREFIXMATCH = jcon.string('^=');
