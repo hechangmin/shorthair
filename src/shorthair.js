@@ -61,12 +61,63 @@ var shorthair = (function(){
     var IGNORE = jcon.regex(/\/\*[^*]*\*+([^/*][^*]*\*+)*\//);
 
 
+    var negation_arg = jcon.or(type_selector, universal, HASH, cls, attrib, pseudo);
+
+    var negation = jcon.seq(NOT, S.many(), negation_arg, S.many(), jcon.string(')'));
 
 
+    var namespace_prefix = jcon.seq( jcon.or(IDENT, jcon.string('*')).times(0,1), jcon.string('|'));
 
-    var parser = jcon.string('hello');
+    var expression = jcon.seq( jcon.or(PLUS, jcon.string('-'), DIMENSION, NUMBER, STRING, IDENT), S.many() ).least(1);
 
-    return parser;
+    var functional_pseudo = jcon.seq(FUNCTION, S.many(), expression, jcon.string(')'));
+    
+    var pseudo = jcon.seq(jcon.string(':'), jcon.string(':').times(0,1), jcon.or(IDENT, functional_pseudo));
+
+    var attrib = jcon.seq(jcon.string('['), S.many(), namespace_prefix.times(0,1), IDENT, S.many(),
+        jcon.seq(
+            jcon.or(PREFIXMATCH, SUFFIXMATCH, SUBSTRINGMATCH, jcon.string('='), INCLUDES, DASHMATCH),
+            S.many(),
+            jcon.or(IDENT, STRING),
+            S.many()
+        ).times(0,1), jcon.string(']'));
+
+    var cls = jcon.seq(jcon.string('.'), IDENT);
+
+    var universal = jcon.seq(namespace_prefix.times(0,1), jcon.string('*'));
+
+    var element_name = IDENT;
+
+
+    var type_selector = jcon.seq(namespace_prefix.times(0,1), element_name);
+
+    var simple_selector_sequence = jcon.or(
+        jcon.seq(
+            jcon.or(type_selector, universal),
+            jcon.or(HASH, cls, attrib, pseudo, negation).many()
+        ),
+        jcon.or(HASH, cls, attrib, pseudo, negation).least(1)
+    );
+
+    var combinator = jcon.or(
+        jcon.seq(PLUS, S.many()),
+        jcon.seq(GREATER, S.many()),
+        jcon.seq(TILDE, S.many()),
+        S.least(1)
+    );
+
+    var selector = jcon.seq(
+        simple_selector_sequence,
+        jcon.seq(combinator, simple_selector_sequence).many()
+    );
+
+    var selectors_group = jcon.seq(
+        selector,
+        jcon.seq(COMMA, S.many(), selector).many()
+    );
+
+
+    return selectors_group;
 
 }());
 
