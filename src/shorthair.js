@@ -39,7 +39,7 @@ var shorthair = (function(){
 
 
     //css3-selector词法单元定义
-    var S = jcon.regex(/[ \t\r\n\f]+/);
+    var S = jcon.regex(/[ \t\r\n\f]+/).skip();
     var INCLUDES = jcon.string('~=');
     var DASHMATCH = jcon.string('|=');
     var PREFIXMATCH = jcon.string('^=');
@@ -81,7 +81,7 @@ var shorthair = (function(){
     
     var pseudo = jcon.seqJoin(jcon.string(':'), jcon.string(':').possible(), jcon.or(IDENT, functional_pseudo));
 
-    var attrib = jcon.seqJoin(jcon.string('['), S.manyJoin(), namespace_prefix.possible(), IDENT, S.manyJoin(),
+    var attrib = jcon.seqJoin(jcon.string('['), S.manyJoin(), namespace_prefix.lookhead(IDENT).possible(), IDENT, S.manyJoin(),
         jcon.seqJoin(
             jcon.or(PREFIXMATCH, SUFFIXMATCH, SUBSTRINGMATCH, jcon.string('='), INCLUDES, DASHMATCH),
             S.manyJoin(),
