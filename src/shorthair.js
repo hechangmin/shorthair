@@ -1,9 +1,13 @@
 /**
  *
- * css3-selector
+ * shorthair
  *
- * 参考：http://www.w3.org/TR/css3-selectors/#w3cselgrammar
- * 参考：http://www.w3.org/TR/css3-selectors/
+ * 严格遵循W3C标准的css3-selector的parser的基于jcon的js实现
+ *
+ * 词法及文法参考：http://www.w3.org/TR/css3-selectors/#w3cselgrammar
+ * 解析器组合子：https://github.com/takumi4ichi/jcon
+ *
+ *  -- (该项目给最爱的动漫NANA，希望矢泽爱大人早日康复!)
  *
  */
 var shorthair = (function(){
