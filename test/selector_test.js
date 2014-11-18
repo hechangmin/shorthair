@@ -10,9 +10,16 @@ module.exports = (function(){
 
     return {
         tag: function(test){
-            console.log(JSON.stringify(shorthair.parse('hello.a.b>a.b b').value));
-            //test.equal(shorthair.parse('hello').value, 'hello', 'tag ok!');
+            test.deepEqual(shorthair.parse('div').value, ['div'], 'tag ok!');
             test.done();
+        },
+        pseudo: function(test){
+            test.deepEqual(shorthair.parse('div:first-child').value, ['div',':first-child'], 'tag ok!');
+            test.done();
+        },
+        cls: function(test){
+            test.deepEqual(shorthair.parse('div.title:first-child').value, ['div','.title',':first-child'], 'tag ok!');
+            test.done()
         }
     };
 
