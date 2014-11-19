@@ -1,13 +1,13 @@
 {
   "name": "shorthair",
   "description": "css3-selector parser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/takumi4ichi",
   "author": {
     "name": "takumi4ichi",
     "email": "takumi4ichi@gmail.com"
   },
-  "main": "./index.js",
+  "main": "./src/shorthair.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:takumi4ichi/shorthair.git"
