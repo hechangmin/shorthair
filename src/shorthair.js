@@ -75,11 +75,11 @@ var shorthair = (function(){
     var expression = jcon.seqJoin( 
         jcon.or(PLUS, jcon.string('-'), DIMENSION, NUMBER, STRING, IDENT),
         S.manyJoin()
-    ).least(1);
+    ).least(1).joinValue();
 
     var functional_pseudo = jcon.seqJoin(FUNCTION, S.manyJoin(), expression, jcon.string(')'));
     
-    var pseudo = jcon.seqJoin(jcon.string(':'), jcon.string(':').possible(), jcon.or(IDENT, functional_pseudo));
+    var pseudo = jcon.seqJoin(jcon.string(':'), jcon.string(':').possible(), jcon.or(functional_pseudo, IDENT));
 
     var attrib = jcon.seqJoin(jcon.string('['), S.manyJoin(), namespace_prefix.lookhead(IDENT).possible(), IDENT, S.manyJoin(),
         jcon.seqJoin(
@@ -102,7 +102,7 @@ var shorthair = (function(){
         jcon.seq(
             jcon.or(type_selector, universal),
             jcon.or(HASH, cls, attrib, pseudo, negation).many()
-        ).process(flat),
+        ).flat(),
         jcon.or(HASH, cls, attrib, pseudo, negation).least(1)
     );
 
@@ -115,27 +115,13 @@ var shorthair = (function(){
 
     var selector = jcon.seq(
         simple_selector_sequence,
-        jcon.seq(combinator, simple_selector_sequence).process(flat).many().process(flat)
-    ).process(flat);
+        jcon.seq(combinator, simple_selector_sequence).flat().many().flat()
+    ).flat();
 
     var selectors_group = jcon.seq(
         selector,
         jcon.seq(COMMA, S.manyJoin(), selector).many()
-    ).process(flat);
-
-    function flat(result){
-        if(!!result.success && result.value instanceof Array){
-            var values = [];
-            for(var i=0,len=result.value.length; i<len; i++){
-                if(result.value[i] instanceof Array){
-                    values = values.concat(result.value[i]);
-                }else{
-                    values.push(result.value[i]);
-                }
-            }
-            result.value = values;
-        }
-    }
+    ).flat();
 
 
     return selectors_group;
