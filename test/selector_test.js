@@ -126,11 +126,75 @@ module.exports = (function(){
             selector = '*.class[test \r|=value]';
             test.deepEqual(shorthair.parse(selector).value, ['*', '.class', '[test|=value]'], selector + ' PASSED');
 
+            selector = '*.class[test \r|= \rvalue]';
+            test.deepEqual(shorthair.parse(selector).value, ['*', '.class', '[test|=value]'], selector + ' PASSED');
+
             test.done();
         },
-        pseudo: function(test){
-            test.deepEqual(shorthair.parse('div:first-child').value, ['div',':first-child'], 'pseudo ok!');
+        basic_pseudo_class: function(test){
+            selector = '*:root';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':root'], selector + ' PASSED');
+
+            selector = '*:first-child';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':first-child'], selector + ' PASSED');
+
+            selector = '*:last-child';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':last-child'], selector + ' PASSED');
+
+            selector = '*:only-child';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':only-child'], selector + ' PASSED');
+
+            selector = '*:last-of-type';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':last-of-type'], selector + ' PASSED');
+
+            selector = '*:only-of-type';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':only-of-type'], selector + ' PASSED');
+
+            selector = '*:empty';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':empty'], selector + ' PASSED');
+
+            selector = '*:link';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':link'], selector + ' PASSED');
+
+            selector = '*:visited';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':visited'], selector + ' PASSED');
+
+            selector = '*:actived';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':actived'], selector + ' PASSED');
+
+            selector = '*:hover';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':hover'], selector + ' PASSED');
+
+            selector = '*:focus';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':focus'], selector + ' PASSED');
+
+            selector = '*:target';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':target'], selector + ' PASSED');
+
+            selector = '*:lang(fr)';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':lang(fr)'], selector + ' PASSED');
+
+            selector = '*:enabled';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':enabled'], selector + ' PASSED');
+
+            selector = '*:disabled';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':disabled'], selector + ' PASSED');
+
+            selector = '*:checked';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':checked'], selector + ' PASSED');
+
+            selector = '*:nth-child(n)';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':nth-child(n)'], selector + ' PASSED');
+
+            selector = '*:nth-child(10)';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':nth-child(10)'], selector + ' PASSED');
+
+            selector = '*:nth-child(n+1)';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':nth-child(n+1)'], selector + ' PASSED');
+
+
             test.done();
+
         },
     };
 
