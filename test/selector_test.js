@@ -192,6 +192,44 @@ module.exports = (function(){
             selector = '*:nth-child(n+1)';
             test.deepEqual(shorthair.parse(selector).value, ['*', ':nth-child(n+1)'], selector + ' PASSED');
 
+            selector = '*:nth-child(2n+1)';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':nth-child(2n+1)'], selector + ' PASSED');
+
+            selector = '*:nth-child(even)';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':nth-child(even)'], selector + ' PASSED');
+
+            selector = '*:nth-child(odd)';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':nth-child(odd)'], selector + ' PASSED');
+
+            selector = '*:nth-child(10n-1)';
+            test.deepEqual(shorthair.parse(selector).value, ['*', ':nth-child(10n-1)'], selector + ' PASSED');
+
+            test.done();
+
+        },
+        basic_pseudo_element: function(test){
+            selector = '*::first-line';
+            test.deepEqual(shorthair.parse(selector).value, ['*', '::first-line'], selector + ' PASSED');
+
+
+            selector = '*::first-letter';
+            test.deepEqual(shorthair.parse(selector).value, ['*', '::first-letter'], selector + ' PASSED');
+
+            selector = '*::before';
+            test.deepEqual(shorthair.parse(selector).value, ['*', '::before'], selector + ' PASSED');
+
+            selector = '*::after';
+            test.deepEqual(shorthair.parse(selector).value, ['*', '::after'], selector + ' PASSED');
+
+            test.done();
+        },
+        not: function(test){
+
+            selector = 'div:not(a)';
+            test.deepEqual(shorthair.parse(selector).value, ['div', ':not(a)'], selector + ' PASSED');
+
+            //selector = 'div:not(#a)';
+            //test.deepEqual(shorthair.parse(selector).value, ['div', ':not(#a)'], selector + ' PASSED');
 
             test.done();
 

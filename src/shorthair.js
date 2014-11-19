@@ -70,7 +70,7 @@ var shorthair = (function(){
     var negation = jcon.seqJoin(NOT, S.manyJoin(), negation_arg, S.manyJoin(), jcon.string(')'));
 
 
-    var namespace_prefix = jcon.seqJoin( jcon.or(IDENT, jcon.string('*')).possible(), jcon.string('|'));
+    var namespace_prefix = jcon.seqJoin( jcon.or(IDENT, jcon.string('*')).possible(), jcon.string('|')).lookhead(IDENT);
 
     var expression = jcon.seqJoin( 
         jcon.or(PLUS, jcon.string('-'), DIMENSION, NUMBER, STRING, IDENT),
@@ -81,7 +81,7 @@ var shorthair = (function(){
     
     var pseudo = jcon.seqJoin(jcon.string(':'), jcon.string(':').possible(), jcon.or(functional_pseudo, IDENT));
 
-    var attrib = jcon.seqJoin(jcon.string('['), S.manyJoin(), namespace_prefix.lookhead(IDENT).possible(), IDENT, S.manyJoin(),
+    var attrib = jcon.seqJoin(jcon.string('['), S.manyJoin(), namespace_prefix.possible(), IDENT, S.manyJoin(),
         jcon.seqJoin(
             jcon.or(PREFIXMATCH, SUFFIXMATCH, SUBSTRINGMATCH, jcon.string('='), INCLUDES, DASHMATCH),
             S.manyJoin(),
@@ -101,9 +101,9 @@ var shorthair = (function(){
     var simple_selector_sequence = jcon.or(
         jcon.seq(
             jcon.or(type_selector, universal),
-            jcon.or(HASH, cls, attrib, pseudo, negation).many()
+            jcon.or(HASH, cls, attrib, negation, pseudo).many()
         ).flat(),
-        jcon.or(HASH, cls, attrib, pseudo, negation).least(1)
+        jcon.or(HASH, cls, attrib, negation, pseudo).least(1)
     );
 
     var combinator = jcon.or(
