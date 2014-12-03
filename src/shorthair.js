@@ -39,7 +39,7 @@ var shorthair = (function(){
 
 
     //css3-selector词法单元定义
-    var S = jcon.regex(/[ \t\r\n\f]+/).skip();
+    var S = jcon.regex(/[ \t\r\n\f]+/);
     var INCLUDES = jcon.string('~=');
     var DASHMATCH = jcon.string('|=');
     var PREFIXMATCH = jcon.string('^=');
@@ -69,26 +69,26 @@ var shorthair = (function(){
         return jcon.or(type_selector, universal, HASH, cls, attrib, pseudo);
     });
 
-    var negation = jcon.seqJoin(NOT, S.manyJoin(), negation_arg, S.manyJoin(), jcon.string(')'));
+    var negation = jcon.seqJoin(NOT, S.manyJoin().skip(), negation_arg, S.manyJoin().skip(), jcon.string(')'));
 
 
     var namespace_prefix = jcon.seqJoin( jcon.or(IDENT, jcon.string('*')).possible(), jcon.string('|')).lookhead(IDENT);
 
     var expression = jcon.seqJoin( 
         jcon.or(PLUS, jcon.string('-'), DIMENSION, NUMBER, STRING, IDENT),
-        S.manyJoin()
+        S.manyJoin().skip()
     ).least(1).joinValue();
 
-    var functional_pseudo = jcon.seqJoin(FUNCTION, S.manyJoin(), expression, jcon.string(')'));
+    var functional_pseudo = jcon.seqJoin(FUNCTION, S.manyJoin().skip(), expression, jcon.string(')'));
     
     var pseudo = jcon.seqJoin(jcon.string(':'), jcon.string(':').possible(), jcon.or(functional_pseudo, IDENT));
 
-    var attrib = jcon.seqJoin(jcon.string('['), S.manyJoin(), namespace_prefix.possible(), IDENT, S.manyJoin(),
+    var attrib = jcon.seqJoin(jcon.string('['), S.manyJoin().skip(), namespace_prefix.possible(), IDENT, S.manyJoin().skip(),
         jcon.seqJoin(
             jcon.or(PREFIXMATCH, SUFFIXMATCH, SUBSTRINGMATCH, jcon.string('='), INCLUDES, DASHMATCH),
-            S.manyJoin(),
+            S.manyJoin().skip(),
             jcon.or(IDENT, STRING),
-            S.manyJoin()
+            S.manyJoin().skip()
         ).possible(), jcon.string(']'));
 
     var cls = jcon.seqJoin(jcon.string('.'), IDENT);
@@ -109,9 +109,9 @@ var shorthair = (function(){
     );
 
     var combinator = jcon.or(
-        jcon.seqJoin(PLUS, S.manyJoin()),
-        jcon.seqJoin(GREATER, S.manyJoin()),
-        jcon.seqJoin(TILDE, S.manyJoin()),
+        jcon.seqJoin(S.manyJoin().skip(), PLUS, S.manyJoin().skip()),
+        jcon.seqJoin(S.manyJoin().skip(), GREATER, S.manyJoin().skip()),
+        jcon.seqJoin(S.manyJoin().skip(), TILDE, S.manyJoin().skip()),
         S.least(1)
     );
 
@@ -122,7 +122,7 @@ var shorthair = (function(){
 
     var selectors_group = jcon.seq(
         selector,
-        jcon.seq(COMMA, S.manyJoin(), selector).many()
+        jcon.seq(COMMA, S.manyJoin().skip(), selector).many()
     ).flat();
 
 

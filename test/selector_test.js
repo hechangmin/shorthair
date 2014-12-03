@@ -231,9 +231,43 @@ module.exports = (function(){
             selector = 'div:not(#a)';
             test.deepEqual(shorthair.parse(selector).value, ['div', ':not(#a)'], selector + ' PASSED');
 
+            selector = 'div:not(.cls)';
+            test.deepEqual(shorthair.parse(selector).value, ['div', ':not(.cls)'], selector + ' PASSED');
+
+            selector = 'div:not([test~=value])';
+            test.deepEqual(shorthair.parse(selector).value, ['div', ':not([test~=value])'], selector + ' PASSED');
+
+            selector = 'div:not(:focus)';
+            test.deepEqual(shorthair.parse(selector).value, ['div', ':not(:focus)'], selector + ' PASSED');
+
+            selector = 'div:not(:nth-child(2n+1))';
+            test.deepEqual(shorthair.parse(selector).value, ['div', ':not(:nth-child(2n+1))'], selector + ' PASSED');
+
             test.done();
 
         },
+        combinator: function(test){
+
+            selector = 'div div';
+            test.deepEqual(shorthair.parse(selector).value, ['div', ' ', 'div'], selector + ' PASSED');
+
+            selector = 'div + div';
+            test.deepEqual(shorthair.parse(selector).value, ['div', '+', 'div'], selector + ' PASSED');
+
+            selector = 'div ~ div';
+            test.deepEqual(shorthair.parse(selector).value, ['div', '~', 'div'], selector + ' PASSED');
+
+            selector = 'div > div';
+            test.deepEqual(shorthair.parse(selector).value, ['div', '>', 'div'], selector + ' PASSED');
+
+            selector = 'div>div';
+            test.deepEqual(shorthair.parse(selector).value, ['div', '>', 'div'], selector + ' PASSED');
+
+            selector = 'div > \t\rdiv';
+            test.deepEqual(shorthair.parse(selector).value, ['div', '>', 'div'], selector + ' PASSED');
+
+            test.done();
+        }
     };
 
 }());
