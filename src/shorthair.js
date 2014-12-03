@@ -65,7 +65,9 @@ var shorthair = (function(){
     var IGNORE = jcon.regex(/\/\*[^*]*\*+([^/*][^*]*\*+)*\//);
 
 
-    var negation_arg = jcon.or(type_selector, universal, HASH, cls, attrib, pseudo);
+    var negation_arg = jcon.lazy(function(){
+        return jcon.or(type_selector, universal, HASH, cls, attrib, pseudo);
+    });
 
     var negation = jcon.seqJoin(NOT, S.manyJoin(), negation_arg, S.manyJoin(), jcon.string(')'));
 

@@ -228,8 +228,8 @@ module.exports = (function(){
             selector = 'div:not(a)';
             test.deepEqual(shorthair.parse(selector).value, ['div', ':not(a)'], selector + ' PASSED');
 
-            //selector = 'div:not(#a)';
-            //test.deepEqual(shorthair.parse(selector).value, ['div', ':not(#a)'], selector + ' PASSED');
+            selector = 'div:not(#a)';
+            test.deepEqual(shorthair.parse(selector).value, ['div', ':not(#a)'], selector + ' PASSED');
 
             test.done();
 
