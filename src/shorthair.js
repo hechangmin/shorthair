@@ -16,22 +16,22 @@ var shorthair = (function(){
 
 
     //css3-selector基本正则定义
-    var nonascii = jcon.regex(/[^\0-\177]/);
-    var unicode = jcon.regex(/\\[0-9a-f]{1,6}(\r\n|[ \n\r\t\f])?/);
-    var nmchar = jcon.regex(/[_a-z0-9-]/).or(nonascii, escape);
-    var nmstart = jcon.regex(/[_a-z]/).or(nonascii, escape);
-    var ident = jcon.regex(/[-]?/).seqJoin(nmstart, nmchar.manyJoin());
-    var name = nmchar.least(1);
-    var escape = unicode.or(jcon.regex(/\\[^\n\r\f0-9a-f]/));
-    var num = jcon.regex(/[0-9]+|[0-9]*\.[0-9]+/);
-    var nl = jcon.regex(/\n|\r\n|\r|\f/);
-    var string1 = jcon.string('"').seqJoin(jcon.regex(/[^\n\r\f\\"]/).or(nl, nonascii, escape).manyJoin(), jcon.string('"'));
-    var string2 = jcon.string("'").seqJoin(jcon.regex(/[^\n\r\f\\']/).or(nl, nonascii, escape).manyJoin(), jcon.string('"'));
-    var string = string1.or(string2);
-    var invalid1 = jcon.string('"').seqJoin(jcon.regex(/[^\n\r\f\\"]/).or(nl, nonascii, escape).manyJoin());
-    var invalid2 = jcon.string("'").seqJoin(jcon.regex(/[^\n\r\f\\']/).or(nl, nonascii, escape).manyJoin());
-    var invalid = invalid1.or(invalid2);
-    var w = jcon.regex(/[ \t\r\n\f]*/);
+    var nonascii = jcon.regex(/[^\0-\177]/).type('nonascii');
+    var unicode = jcon.regex(/\\[0-9a-f]{1,6}(\r\n|[ \n\r\t\f])?/).type('unicode');
+    var nmchar = jcon.regex(/[_a-z0-9-]/).or(nonascii, escape).type('nmchar');
+    var nmstart = jcon.regex(/[_a-z]/).or(nonascii, escape).type('nmstart');
+    var ident = jcon.regex(/[-]?/).seq(nmstart, nmchar.many()).type('ident');
+    var name = nmchar.least(1).type('name');
+    var escape = unicode.or(jcon.regex(/\\[^\n\r\f0-9a-f]/)).type('escape');
+    var num = jcon.regex(/[0-9]+|[0-9]*\.[0-9]+/).type('num');
+    var nl = jcon.regex(/\n|\r\n|\r|\f/).type('nl');
+    var string1 = jcon.string('"').seq(jcon.regex(/[^\n\r\f\\"]/).or(nl, nonascii, escape).many(), jcon.string('"')).type('string1');
+    var string2 = jcon.string("'").seq(jcon.regex(/[^\n\r\f\\']/).or(nl, nonascii, escape).many(), jcon.string('"')).type('string2');
+    var string = string1.or(string2).type('string');
+    var invalid1 = jcon.string('"').seq(jcon.regex(/[^\n\r\f\\"]/).or(nl, nonascii, escape).many()).type('invalid1');
+    var invalid2 = jcon.string("'").seq(jcon.regex(/[^\n\r\f\\']/).or(nl, nonascii, escape).many()).type('invalid2');
+    var invalid = invalid1.or(invalid2).type('invalid');
+    var w = jcon.regex(/[ \t\r\n\f]*/).type('w');
 
     //var D = d.or(jcon.regex(/\\0{0,4}(44|64)(\r\n|[ \t\r\n\f])?/));
     var O = jcon.string('o').or(jcon.regex(/\\0{0,4}(4f|6f)(\r\n|[ \t\r\n\f])?/)).or(jcon.string('\\o'));
@@ -39,66 +39,66 @@ var shorthair = (function(){
 
 
     //css3-selector词法单元定义
-    var S = jcon.regex(/[ \t\r\n\f]+/);
-    var INCLUDES = jcon.string('~=');
-    var DASHMATCH = jcon.string('|=');
-    var PREFIXMATCH = jcon.string('^=');
-    var SUFFIXMATCH = jcon.string('$=');
-    var SUBSTRINGMATCH = jcon.string('*=');
+    var S = jcon.regex(/[ \t\r\n\f]+/).type('S');
+    var INCLUDES = jcon.string('~=').type('INCLUDES');
+    var DASHMATCH = jcon.string('|=').type('DASHMATCH');
+    var PREFIXMATCH = jcon.string('^=').type('PREFIXMATCH');
+    var SUFFIXMATCH = jcon.string('$=').type('SUFFIXMATCH');
+    var SUBSTRINGMATCH = jcon.string('*=').type('SUBSTRINGMATCH');
     var IDENT = ident;
     var STRING = string;
-    var FUNCTION = ident.seqJoin(jcon.string('('));
+    var FUNCTION = ident.seq(jcon.string('(')).type('FUNCTION');
     var NUMBER = num;
-    var HASH = jcon.string('#').seqJoin(name);
-    var PLUS = w.seqJoin(jcon.string('+'));
-    var GREATER = w.seqJoin(jcon.string('>'));
-    var COMMA = w.seqJoin(jcon.string(','));
-    var TILDE = w.seqJoin(jcon.string('~'));
-    var NOT = jcon.string(':not(');
-    var ATKEYWORD = jcon.string('@').seqJoin(ident);
+    var HASH = jcon.string('#').seq(name).type('HASH');
+    var PLUS = w.seq(jcon.string('+')).type('PLUS');
+    var GREATER = w.seq(jcon.string('>')).type('GREATER');
+    var COMMA = w.seq(jcon.string(',')).type('COMMA');
+    var TILDE = w.seq(jcon.string('~')).type('TILDE');
+    var NOT = jcon.string(':not(').type('NOT');
+    var ATKEYWORD = jcon.string('@').seq(ident).type('ATKEYWORD');
     var INVALID = invalid;
-    var PERCENTAGE = num.seqJoin(jcon.string('%'));
-    var DIMENSION = num.seqJoin(ident);
-    var CDO = jcon.string('<!--');
-    var CDC = jcon.string('-->');
+    var PERCENTAGE = num.seq(jcon.string('%')).type('PERCENTAGE');
+    var DIMENSION = num.seq(ident).type('DIMENSION');
+    var CDO = jcon.string('<!--').type('CDO');
+    var CDC = jcon.string('-->').type('CDC');
 
-    var IGNORE = jcon.regex(/\/\*[^*]*\*+([^/*][^*]*\*+)*\//);
+    var IGNORE = jcon.regex(/\/\*[^*]*\*+([^/*][^*]*\*+)*\//).type('IGNORE');
 
 
     var negation_arg = jcon.lazy(function(){
         return jcon.or(type_selector, universal, HASH, cls, attrib, pseudo);
-    });
+    }).type('negation_arg');
 
-    var negation = jcon.seqJoin(NOT, S.manyJoin().skip(), negation_arg, S.manyJoin().skip(), jcon.string(')'));
+    var negation = jcon.seq(NOT, S.many().skip(), negation_arg, S.many().skip(), jcon.string(')')).type('negation');
 
 
-    var namespace_prefix = jcon.seqJoin( jcon.or(IDENT, jcon.string('*')).possible(), jcon.string('|')).lookhead(IDENT);
+    var namespace_prefix = jcon.seq( jcon.or(IDENT, jcon.string('*')).possible(), jcon.string('|')).lookhead(IDENT).type('namespace_prefix');
 
-    var expression = jcon.seqJoin( 
+    var expression = jcon.seq( 
         jcon.or(PLUS, jcon.string('-'), DIMENSION, NUMBER, STRING, IDENT),
-        S.manyJoin().skip()
-    ).least(1).joinValue();
+        S.many().skip()
+    ).least(1).type('expression');
 
-    var functional_pseudo = jcon.seqJoin(FUNCTION, S.manyJoin().skip(), expression, jcon.string(')'));
+    var functional_pseudo = jcon.seq(FUNCTION, S.many().skip(), expression, jcon.string(')')).type('functional_pseudo');
     
-    var pseudo = jcon.seqJoin(jcon.string(':'), jcon.string(':').possible(), jcon.or(functional_pseudo, IDENT));
+    var pseudo = jcon.seq(jcon.string(':'), jcon.string(':').possible(), jcon.or(functional_pseudo, IDENT)).type('pseudo');
 
-    var attrib = jcon.seqJoin(jcon.string('['), S.manyJoin().skip(), namespace_prefix.possible(), IDENT, S.manyJoin().skip(),
-        jcon.seqJoin(
+    var attrib = jcon.seq(jcon.string('['), S.many().skip(), namespace_prefix.possible(), IDENT, S.many().skip(),
+        jcon.seq(
             jcon.or(PREFIXMATCH, SUFFIXMATCH, SUBSTRINGMATCH, jcon.string('='), INCLUDES, DASHMATCH),
-            S.manyJoin().skip(),
+            S.many().skip(),
             jcon.or(IDENT, STRING),
-            S.manyJoin().skip()
-        ).possible(), jcon.string(']'));
+            S.many().skip()
+        ).possible(), jcon.string(']')).type('attrib');
 
-    var cls = jcon.seqJoin(jcon.string('.'), IDENT);
+    var cls = jcon.seq(jcon.string('.'), IDENT).type('class');
 
-    var universal = jcon.seqJoin(namespace_prefix.possible(), jcon.string('*'));
+    var universal = jcon.seq(namespace_prefix.possible(), jcon.string('*')).type('universal');
 
-    var element_name = IDENT;
+    var element_name = IDENT.type('element_name');
 
 
-    var type_selector = jcon.seqJoin(namespace_prefix.possible(), element_name);
+    var type_selector = jcon.seq(namespace_prefix.possible(), element_name).type('type_selector');
 
     var simple_selector_sequence = jcon.or(
         jcon.seq(
@@ -106,24 +106,24 @@ var shorthair = (function(){
             jcon.or(HASH, cls, attrib, negation, pseudo).many()
         ).flat(),
         jcon.or(HASH, cls, attrib, negation, pseudo).least(1)
-    );
+    ).type('simple_selector_sequence');
 
     var combinator = jcon.or(
-        jcon.seqJoin(S.manyJoin().skip(), PLUS, S.manyJoin().skip()),
-        jcon.seqJoin(S.manyJoin().skip(), GREATER, S.manyJoin().skip()),
-        jcon.seqJoin(S.manyJoin().skip(), TILDE, S.manyJoin().skip()),
+        jcon.seq(S.many().skip(), PLUS, S.many().skip()),
+        jcon.seq(S.many().skip(), GREATER, S.many().skip()),
+        jcon.seq(S.many().skip(), TILDE, S.many().skip()),
         S.least(1)
-    );
+    ).type('combinator');
 
     var selector = jcon.seq(
         simple_selector_sequence,
         jcon.seq(combinator, simple_selector_sequence).flat().many().flat()
-    ).flat();
+    ).flat().type('selector');
 
     var selectors_group = jcon.seq(
         selector,
-        jcon.seq(COMMA, S.manyJoin().skip(), selector).many()
-    ).flat();
+        jcon.seq(COMMA, S.many().skip(), selector).many()
+    ).flat().type('selectors_group');
 
 
     return selectors_group;
