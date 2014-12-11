@@ -83,19 +83,19 @@ var shorthair = (function(){
     
     var pseudo = jcon.seq(jcon.string(':'), jcon.string(':').possible(), jcon.or(functional_pseudo, IDENT)).type('pseudo');
 
-    var attrib = jcon.seq(jcon.string('['), S.many().skip(), namespace_prefix.possible(), IDENT, S.many().skip(),
+    var attrib = jcon.seq(jcon.string('['), S.many().skip(), namespace_prefix.possible(), IDENT.setAst('name'), S.many().skip(),
         jcon.seq(
-            jcon.or(PREFIXMATCH, SUFFIXMATCH, SUBSTRINGMATCH, jcon.string('='), INCLUDES, DASHMATCH),
+            jcon.or(PREFIXMATCH, SUFFIXMATCH, SUBSTRINGMATCH, jcon.string('='), INCLUDES, DASHMATCH).setAst('operator'),
             S.many().skip(),
-            jcon.or(IDENT, STRING),
+            jcon.or(IDENT, STRING).setAst('value'),
             S.many().skip()
-        ).possible(), jcon.string(']')).type('attrib');
+        ).possible(), jcon.string(']')).type('attrib').setAst();
 
-    var cls = jcon.seq(jcon.string('.'), IDENT).type('class');
+    var cls = jcon.seq(jcon.string('.'), IDENT).type('class').setAst();
 
-    var universal = jcon.seq(namespace_prefix.possible(), jcon.string('*')).type('universal');
+    var universal = jcon.seq(namespace_prefix.possible(), jcon.string('*')).type('universal').setAst();
 
-    var element_name = IDENT.type('element_name');
+    var element_name = IDENT.type('element_name').setAst();
 
 
     var type_selector = jcon.seq(namespace_prefix.possible(), element_name).type('type_selector');
