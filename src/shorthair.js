@@ -7,7 +7,7 @@
  * 词法及文法参考：http://www.w3.org/TR/css3-selectors/#w3cselgrammar
  * 解析器组合子：https://github.com/takumi4ichi/jcon
  *
- *  -- (该项目给最爱的动漫NANA，希望矢泽爱大人早日康复!)
+ *  -- for NANA
  *
  */
 var shorthair = (function(){
