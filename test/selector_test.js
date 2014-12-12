@@ -67,8 +67,7 @@ module.exports = (function(){
             test.deepEqual(shorthair.parse(selector).ast(), [
                 {
                     type: 'universal',
-                    value: '*',
-                    childs: []
+                    value: '*'
                 }
             ], selector + ' PASSED');
 
@@ -85,8 +84,7 @@ module.exports = (function(){
             test.deepEqual(shorthair.parse(selector).ast(), [
                 {
                     type: 'element_name',
-                    value: 'div',
-                    childs: []
+                    value: 'div'
                 }
             ], selector + ' PASSED');
 
@@ -94,8 +92,7 @@ module.exports = (function(){
             test.deepEqual(shorthair.parse(selector).ast(), [
                 {
                     type: 'element_name',
-                    value: 'p',
-                    childs: []
+                    value: 'p'
                 }
             ], selector + ' PASSED');
 
@@ -107,8 +104,7 @@ module.exports = (function(){
             test.deepEqual(shorthair.parse(selector).ast(), [
                 {
                     type: 'class',
-                    value: '.class',
-                    childs: []
+                    value: '.class'
                 }
             ], selector + ' PASSED');
 
@@ -116,13 +112,11 @@ module.exports = (function(){
             test.deepEqual(shorthair.parse(selector).ast(), [
                 {
                     type: 'universal',
-                    value: '*',
-                    childs: []
+                    value: '*'
                 },
                 {
                     type: 'class',
-                    value: '.class',
-                    childs: []
+                    value: '.class'
                 }
             ], selector + ' PASSED');
 
@@ -130,13 +124,11 @@ module.exports = (function(){
             test.deepEqual(shorthair.parse(selector).ast(), [
                 {
                     type: 'element_name',
-                    value: 'div',
-                    childs: []
+                    value: 'div'
                 },
                 {
                     type: 'class',
-                    value: '.class',
-                    childs: []
+                    value: '.class'
                 }
             ], selector + ' PASSED');
 
@@ -148,8 +140,7 @@ module.exports = (function(){
             test.deepEqual(shorthair.parse(selector).ast(), [
                 {
                     type: 'universal',
-                    value: '*',
-                    childs: []
+                    value: '*'
                 },
                 {
                     type: 'attrib',
@@ -157,18 +148,15 @@ module.exports = (function(){
                     childs: [
                         {
                             type: 'name',
-                            value: 'test',
-                            childs: []
+                            value: 'test'
                         },
                         {
                             type: 'operator',
-                            value: '=',
-                            childs: []
+                            value: '='
                         },
                         {
                             type: 'value',
-                            value: 'value',
-                            childs: []
+                            value: 'value'
                         }
                     ]
                 }
