@@ -26,7 +26,8 @@ shorthair是一个严格遵循w3c关于css3-selector的文法约定([@w3c select
     var shorthair = require('../src/shorthair');
 
     //解析树
-    var selParseTree = shorthair.parse('*.content>div a[link^="http://www.taobao.com"]:not([target=_blank]):first-child');
+    var selParseTree = shorthair.parse(
+        '*.content>div a[link^="http://"]:not([target=_blank]):first-child');
 
     //转换为语法树
     var selAstTree = selParseTree.ast();
