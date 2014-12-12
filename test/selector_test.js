@@ -162,154 +162,798 @@ module.exports = (function(){
                 }
             ], selector + ' PASSED');
 
-            /*
             selector = '.class[test=value]';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['.class', '[test=value]'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'class',
+                    value: '.class'
+                },
+                {
+                    type: 'attrib',
+                    value: '[test=value]',
+                    childs: [
+                        {
+                            type: 'name',
+                            value: 'test'
+                        },
+                        {
+                            type: 'operator',
+                            value: '='
+                        },
+                        {
+                            type: 'value',
+                            value: 'value'
+                        }
+                    ]
+                }
+            ], selector + ' PASSED');
+
 
             selector = '*.class[test=value]';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '.class', '[test=value]'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'class',
+                    value: '.class'
+                },
+                {
+                    type: 'attrib',
+                    value: '[test=value]',
+                    childs: [
+                        {
+                            type: 'name',
+                            value: 'test'
+                        },
+                        {
+                            type: 'operator',
+                            value: '='
+                        },
+                        {
+                            type: 'value',
+                            value: 'value'
+                        }
+                    ]
+                }
+            ], selector + ' PASSED');
 
-            selector = 'div.class[test=value]';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', '.class', '[test=value]'], selector + ' PASSED');
 
             selector = '*.class[test~=value]';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '.class', '[test~=value]'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'class',
+                    value: '.class'
+                },
+                {
+                    type: 'attrib',
+                    value: '[test~=value]',
+                    childs: [
+                        {
+                            type: 'name',
+                            value: 'test'
+                        },
+                        {
+                            type: 'operator',
+                            value: '~='
+                        },
+                        {
+                            type: 'value',
+                            value: 'value'
+                        }
+                    ]
+                }
+            ], selector + ' PASSED');
 
             selector = '*.class[test^=value]';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '.class', '[test^=value]'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'class',
+                    value: '.class'
+                },
+                {
+                    type: 'attrib',
+                    value: '[test^=value]',
+                    childs: [
+                        {
+                            type: 'name',
+                            value: 'test'
+                        },
+                        {
+                            type: 'operator',
+                            value: '^='
+                        },
+                        {
+                            type: 'value',
+                            value: 'value'
+                        }
+                    ]
+                }
+            ], selector + ' PASSED');
 
             selector = '*.class[test$=value]';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '.class', '[test$=value]'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'class',
+                    value: '.class'
+                },
+                {
+                    type: 'attrib',
+                    value: '[test$=value]',
+                    childs: [
+                        {
+                            type: 'name',
+                            value: 'test'
+                        },
+                        {
+                            type: 'operator',
+                            value: '$='
+                        },
+                        {
+                            type: 'value',
+                            value: 'value'
+                        }
+                    ]
+                }
+            ], selector + ' PASSED');
 
             selector = '*.class[test*=value]';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '.class', '[test*=value]'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'class',
+                    value: '.class'
+                },
+                {
+                    type: 'attrib',
+                    value: '[test*=value]',
+                    childs: [
+                        {
+                            type: 'name',
+                            value: 'test'
+                        },
+                        {
+                            type: 'operator',
+                            value: '*='
+                        },
+                        {
+                            type: 'value',
+                            value: 'value'
+                        }
+                    ]
+                }
+            ], selector + ' PASSED');
 
             selector = '*.class[test|=value]';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '.class', '[test|=value]'], selector + ' PASSED');
-
-            console.log(shorthair.parse(selector).rhs.map(function(r){return r.value}));
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'class',
+                    value: '.class'
+                },
+                {
+                    type: 'attrib',
+                    value: '[test|=value]',
+                    childs: [
+                        {
+                            type: 'name',
+                            value: 'test'
+                        },
+                        {
+                            type: 'operator',
+                            value: '|='
+                        },
+                        {
+                            type: 'value',
+                            value: 'value'
+                        }
+                    ]
+                }
+            ], selector + ' PASSED');
 
             selector = '*.class[test \r|=value]';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '.class', '[test|=value]'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'class',
+                    value: '.class'
+                },
+                {
+                    type: 'attrib',
+                    value: '[test|=value]',
+                    childs: [
+                        {
+                            type: 'name',
+                            value: 'test'
+                        },
+                        {
+                            type: 'operator',
+                            value: '|='
+                        },
+                        {
+                            type: 'value',
+                            value: 'value'
+                        }
+                    ]
+                }
+            ], selector + ' PASSED');
+
 
             selector = '*.class[test \r|= \rvalue]';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '.class', '[test|=value]'], selector + ' PASSED');
-            */
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'class',
+                    value: '.class'
+                },
+                {
+                    type: 'attrib',
+                    value: '[test|=value]',
+                    childs: [
+                        {
+                            type: 'name',
+                            value: 'test'
+                        },
+                        {
+                            type: 'operator',
+                            value: '|='
+                        },
+                        {
+                            type: 'value',
+                            value: 'value'
+                        }
+                    ]
+                }
+            ], selector + ' PASSED');
 
             test.done();
         },
         basic_pseudo_class: function(test){
-            process.exit();
             selector = '*:root';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':root'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':root'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:first-child';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':first-child'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':first-child'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:last-child';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':last-child'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':last-child'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:only-child';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':only-child'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':only-child'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:last-of-type';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':last-of-type'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':last-of-type'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:only-of-type';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':only-of-type'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':only-of-type'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:empty';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':empty'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':empty'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:link';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':link'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':link'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:visited';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':visited'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':visited'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:actived';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':actived'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':actived'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:hover';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':hover'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':hover'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:focus';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':focus'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':focus'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:target';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':target'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':target'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:lang(fr)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':lang(fr)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':lang(fr)',
+                    childs: [
+                        {
+                            type: 'expression',
+                            value: 'fr'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = '*:enabled';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':enabled'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':enabled'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:disabled';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':disabled'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':disabled'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:checked';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':checked'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':checked'
+                },
+            ], selector + ' PASSED');
 
             selector = '*:nth-child(n)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':nth-child(n)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':nth-child(n)',
+                    childs: [
+                        {
+                            type: 'expression',
+                            value: 'n'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = '*:nth-child(10)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':nth-child(10)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':nth-child(10)',
+                    childs: [
+                        {
+                            type: 'expression',
+                            value: '10'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = '*:nth-child(n+1)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':nth-child(n+1)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':nth-child(n+1)',
+                    childs: [
+                        {
+                            type: 'expression',
+                            value: 'n+1'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = '*:nth-child(2n+1)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':nth-child(2n+1)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':nth-child(2n+1)',
+                    childs: [
+                        {
+                            type: 'expression',
+                            value: '2n+1'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = '*:nth-child(even)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':nth-child(even)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':nth-child(even)',
+                    childs: [
+                        {
+                            type: 'expression',
+                            value: 'even'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = '*:nth-child(odd)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':nth-child(odd)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':nth-child(odd)',
+                    childs: [
+                        {
+                            type: 'expression',
+                            value: 'odd'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = '*:nth-child(10n-1)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', ':nth-child(10n-1)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: ':nth-child(10n-1)',
+                    childs: [
+                        {
+                            type: 'expression',
+                            value: '10n-1'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             test.done();
 
         },
         basic_pseudo_element: function(test){
-            selector = '*::first-line';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '::first-line'], selector + ' PASSED');
 
+            selector = '*::first-line';
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: '::first-line'
+                },
+            ], selector + ' PASSED');
 
             selector = '*::first-letter';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '::first-letter'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: '::first-letter'
+                },
+            ], selector + ' PASSED');
 
             selector = '*::before';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '::before'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: '::before'
+                },
+            ], selector + ' PASSED');
 
             selector = '*::after';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['*', '::after'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'universal',
+                    value: '*'
+                },
+                {
+                    type: 'pseudo',
+                    value: '::after'
+                },
+            ], selector + ' PASSED');
 
             test.done();
         },
         not: function(test){
 
             selector = 'div:not(a)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', ':not(a)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'negation',
+                    value: ':not(a)',
+                    childs: [
+                        {
+                            type: 'element_name',
+                            value: 'a'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = 'div:not(#a)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', ':not(#a)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'negation',
+                    value: ':not(#a)',
+                    childs: [
+                        {
+                            type: 'hash',
+                            value: '#a'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = 'div:not(.cls)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', ':not(.cls)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'negation',
+                    value: ':not(.cls)',
+                    childs: [
+                        {
+                            type: 'class',
+                            value: '.cls'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = 'div:not([test~=value])';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', ':not([test~=value])'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'negation',
+                    value: ':not([test~=value])',
+                    childs: [
+                        {
+                            type: 'attrib',
+                            value: '[test~=value]',
+                            childs: [
+                                {
+                                    type: 'name',
+                                    value: 'test'
+                                },
+                                {
+                                    type: 'operator',
+                                    value: '~='
+                                },
+                                {
+                                    type: 'value',
+                                    value: 'value'
+                                }
+                            ]
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = 'div:not(:focus)';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', ':not(:focus)'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'negation',
+                    value: ':not(:focus)',
+                    childs: [
+                        {
+                            type: 'pseudo',
+                            value: ':focus'
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             selector = 'div:not(:nth-child(2n+1))';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', ':not(:nth-child(2n+1))'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'negation',
+                    value: ':not(:nth-child(2n+1))',
+                    childs: [
+                        {
+                            type: 'pseudo',
+                            value: ':nth-child(2n+1)',
+                            childs: [
+                                {
+                                    type: 'expression',
+                                    value: '2n+1'
+                                }
+                            ]
+                        }
+                    ]
+                },
+            ], selector + ' PASSED');
 
             test.done();
 
@@ -317,22 +961,101 @@ module.exports = (function(){
         combinator: function(test){
 
             selector = 'div div';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', ' ', 'div'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'combinator',
+                    value: ' '
+                },
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+            ], selector + ' PASSED');
+
 
             selector = 'div + div';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', '+', 'div'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'combinator',
+                    value: '+'
+                },
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+            ], selector + ' PASSED');
 
             selector = 'div ~ div';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', '~', 'div'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'combinator',
+                    value: '~'
+                },
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+            ], selector + ' PASSED');
 
             selector = 'div > div';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', '>', 'div'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'combinator',
+                    value: '>'
+                },
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+            ], selector + ' PASSED');
 
             selector = 'div>div';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', '>', 'div'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'combinator',
+                    value: '>'
+                },
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+            ], selector + ' PASSED');
 
             selector = 'div > \t\rdiv';
-            test.deepEqual(shorthair.parse(selector).rhs.map(function(r){return r.value}), ['div', '>', 'div'], selector + ' PASSED');
+            test.deepEqual(shorthair.parse(selector).ast(), [
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+                {
+                    type: 'combinator',
+                    value: '>'
+                },
+                {
+                    type: 'element_name',
+                    value: 'div'
+                },
+            ], selector + ' PASSED');
 
             test.done();
         }

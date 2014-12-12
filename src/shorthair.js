@@ -49,7 +49,7 @@ var shorthair = (function(){
     var STRING = string;
     var FUNCTION = ident.seq(jcon.string('(')).type('FUNCTION');
     var NUMBER = num;
-    var HASH = jcon.string('#').seq(name).type('HASH');
+    var HASH = jcon.string('#').seq(name).type('HASH').setAst('hash');
     var PLUS = w.seq(jcon.string('+')).type('PLUS');
     var GREATER = w.seq(jcon.string('>')).type('GREATER');
     var COMMA = w.seq(jcon.string(',')).type('COMMA');
@@ -69,19 +69,18 @@ var shorthair = (function(){
         return jcon.or(type_selector, universal, HASH, cls, attrib, pseudo);
     }).type('negation_arg');
 
-    var negation = jcon.seq(NOT, S.many().skip(), negation_arg, S.many().skip(), jcon.string(')')).type('negation');
-
+    var negation = jcon.seq(NOT, S.many().skip(), negation_arg, S.many().skip(), jcon.string(')')).type('negation').setAst();
 
     var namespace_prefix = jcon.seq( jcon.or(IDENT, jcon.string('*')).possible(), jcon.string('|')).lookhead(IDENT).type('namespace_prefix');
 
     var expression = jcon.seq( 
         jcon.or(PLUS, jcon.string('-'), DIMENSION, NUMBER, STRING, IDENT),
         S.many().skip()
-    ).least(1).type('expression');
+    ).least(1).type('expression').setAst();
 
     var functional_pseudo = jcon.seq(FUNCTION, S.many().skip(), expression, jcon.string(')')).type('functional_pseudo');
     
-    var pseudo = jcon.seq(jcon.string(':'), jcon.string(':').possible(), jcon.or(functional_pseudo, IDENT)).type('pseudo');
+    var pseudo = jcon.seq(jcon.string(':'), jcon.string(':').possible(), jcon.or(functional_pseudo, IDENT)).type('pseudo').setAst();
 
     var attrib = jcon.seq(jcon.string('['), S.many().skip(), namespace_prefix.possible(), IDENT.setAst('name'), S.many().skip(),
         jcon.seq(
@@ -113,7 +112,7 @@ var shorthair = (function(){
         jcon.seq(S.many().skip(), GREATER, S.many().skip()),
         jcon.seq(S.many().skip(), TILDE, S.many().skip()),
         S.least(1)
-    ).type('combinator');
+    ).type('combinator').setAst();
 
     var selector = jcon.seq(
         simple_selector_sequence,
