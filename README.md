@@ -59,7 +59,7 @@ shorthair是一个严格遵循w3c关于css3-selector的文法约定([@w3c select
         },
         {
             type: 'attrib',
-            value: '[link^="http://www.taobao.com"]',
+            value: '[link^="http://"]',
             childs: [
                 {
                     type: 'name',
@@ -71,7 +71,7 @@ shorthair是一个严格遵循w3c关于css3-selector的文法约定([@w3c select
                 },
                 {
                     type: 'value',
-                    value: '"http://www.taobao.com"'
+                    value: '"http://"'
                 },
             ]
         },
